@@ -6,12 +6,15 @@
 add_action( 'cmb_render_custom_attached_posts', 'cmb_render_custom_attached_posts_callback', 10, 2 );
 function cmb_render_custom_attached_posts_callback( $field, $meta ) {
 
+	$defaults = array( 'post_type' => array( 'post' ) );
+	$field = wp_parse_args( $field, $defaults );
+	
 	// Grab our attached posts meta
 	$attached = get_post_meta( get_the_ID(), '_attached_posts', true );
 
 	// Setup our args
 	$args = array(
-		'post_type'			=> 'post',
+		'post_type'			=> $field['post_type'],
 		'posts_per_page'	=> -1,
 		'orderby'			=> 'name',
 		'order'				=> 'ASC',
